@@ -3,6 +3,10 @@ package main
 import (
 	"net/http"
 
+	"os"
+
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -22,12 +26,18 @@ var albums = []album{
 }
 
 func main() {
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		port = "8000"
+	}
 	router := gin.Default()
 	router.GET("/albums", getAlbums)
 	router.GET("/albums/:id", getAlbumByID)
 	router.POST("/albums", postAlbums)
 
-	router.Run("localhost:8080")
+	router.SetTrustedProxies([]string{"10.81.0.51"})
+	router.Run(fmt.Sprintf(":%s", port))
 }
 
 // getAlbums responds with the list of all albums as JSON.
