@@ -1,4 +1,4 @@
-module example/web-service-gin
+module go-gin-on-koyeb
 
 go 1.19
 
